@@ -20,9 +20,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^video1/', 'video.views.video1'),
     url(r'^video2/', 'video.views.video2'),
-    url(r'^$', 'video.views.home'),
-    #url(r'^(?P<my_args>\d+)/$', 'video.views.detail', name='detail'),
+    url(r'^$', 'video.views.home', name='home'),
+    url(r'^(?P<id>\d+)/$', 'video.views.detail', name='detail'),
     url(r'^test/$', 'video.views.test'),
-
-
 ]

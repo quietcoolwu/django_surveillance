@@ -1,3 +1,4 @@
+<!--base.html-->
 <!doctype html>
 <html lang="en">
 <head>
@@ -5,30 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A layout example that shows off a blog page with a list of posts.">
 
-    <title>北邮D10视频监控</title>
+    <title>BUPT D10 Surveillance System</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
     <link rel="stylesheet" href="http://picturebag.qiniudn.com/blog.css">
+
 </head>
+
 <body>
 <div id="layout" class="pure-g">
     <div class="sidebar pure-u-1 pure-u-md-1-4">
         <div class="header">
-            <h1 class="brand-title">视频监控系统</h1>
+            <h1 class="brand-title"><a href="{% url "home" %}">BUPT D10 Surveillance System</a></h1>
             <h2 class="brand-tagline">BUPT D10</h2>
             <nav class="nav">
                 <ul class="nav-list">
                     <li class="nav-item">
+                        <a class="button-success pure-button" href="/">主页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="button-success pure-button" href="/">归档</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="pure-button" href="video1" target="view_window">video1</a>
                     </li>
                     <li class="nav-item">
-                        <a class="pure-button" href="video1" target="view_window">video2</a>
+                        <a class="button-error pure-button" href="video2" target="view_window">video2</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="button-success pure-button" href="/">操作说明</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="button-success pure-button" href="/">About</a>
                     </li>
                 </ul>
             </nav>
         </div>
     </div>
-
     <div class="content pure-u-1 pure-u-md-3-4">
         <div>
             {% block content %}
@@ -36,8 +50,6 @@
             <div class="footer">
                 <div class="pure-menu pure-menu-horizontal pure-menu-open">
                     <ul>
-                        <li><a href="video1" target="view_window">test1</a></li>
-                        <li><a href="video2" target="view_window">test2</a></li>
                         <li><a href="http://andrewliu.tk/about/">About Me</a></li>
                         <li><a href="http://twitter.com/yuilibrary/">Twitter</a></li>
                         <li><a href="http://github.com/yahoo/pure/">GitHub</a></li>
@@ -47,6 +59,5 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>
