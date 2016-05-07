@@ -31,3 +31,6 @@ def video1(request):
 
 def video2(request):
     return render(request, 'video2.html')
+
+def video3(request):
+    return render(request, 'video3.html')
