@@ -3,22 +3,33 @@
     <script language="JavaScript" type="text/JavaScript">
         var VER_AX_LOCALE = "1.1.15.174";//the version of the ActiveX
         var szDevIP = "VSTB466986TEXJY"; //serial ID or ip of ip camera
-        var nPort = 81; //the HTTP port of ip camera, if the szDevIP is serial ID, this whill be ignore
+        var nPort = 81; //the HTTP port of ip camera, if the szDevIP is serial ID, this will be ignore
         var szAuthAcc = "admin", szAuthPwd = "123456789";//account of ip camera
         var nImgW = 720, nImgH = 540;//the window size of ip camera.
-        var szDevName = "SDKÕ¯“≥≤‚ ‘";//the caption shown on the video
+        var szDevName = "SDK";//the caption shown on the video
         var nDevType = 922;
-        var bInLan = 0;//whether in LAN,1:LAN, 0£∫WAN
+        var bInLan = 0;//whether in LAN,1:LAN,0:WAN
+
+        var VER_AX_LOCALE1 = "1.1.15.174";//the version of the ActiveX
+        var szDevIP1 = "VSTB466986TEXJY"; //serial ID or ip of ip camera
+        var nPort1 = 81; //the HTTP port of ip camera, if the szDevIP is serial ID, this will be ignore
+        var szAuthAcc1 = "admin", szAuthPwd1 = "123456789";//account of ip camera
+        var nImgW1 = 720, nImgH1 = 540;//the window size of ip camera.
+        var szDevName1 = "SDK";//the caption shown on the video
+        var nDevType1 = 922;
+        var bInLan1 = 0;//whether in LAN,1:LAN,0:WAN
+
 
         function ShowDev() {
             try {
                 remote.ClearDevs();
+                remote1.ClearDevs()
             }
             catch (exception) {
                 return;
             }
 
-//		remote.ShowTitle = 0;
+//	remote.ShowTitle = 0;
             remote.Lan = "cn";  //language cn:chinese en:english jp:japanese
             remote.ShowOSDName = 1;//whether to show ipcam caption on the video
             remote.SwitchLayout("1 x 1");
@@ -27,11 +38,26 @@
 //AddDev4(IP Camera mode (903:M; 902:F; 901:E; 904:V; 905:A),LAN,serial ID or IP, HTTP port, display name, account,password,channel)   	
             remote.ShowToolBar = 1;//whether to show toolbar
             remote.AddDev4(nDevType, bInLan, szDevIP, nPort, szDevName, szAuthAcc, szAuthPwd, 1);
-            remote.Listen = 1;//whether to play soound
+            remote.Listen = 1;//whether to play sound
             remote.TurnImg = 0;   //whether reverse video
             remote.ConnectAll();
             remote.Start();
+
+            //	remote1.ShowTitle = 0;
+            remote1.Lan = "cn";  //language cn:chinese en:english jp:japanese
+            remote1.ShowOSDName = 1;//whether to show ipcam caption on the video
+            remote1.SwitchLayout("1 x 1");
+            remote1.Width = nImgW;  //width of the window
+            remote1.Height = nImgH; //height of the window
+//AddDev4(IP Camera mode (903:M; 902:F; 901:E; 904:V; 905:A),LAN,serial ID or IP, HTTP port, display name, account,password,channel)   	
+            remote1.ShowToolBar = 1;//whether to show toolbar
+            remote1.AddDev4(nDevType1, bInLan1, szDevIP1, nPort1, szDevName1, szAuthAcc1, szAuthPwd1, 1);
+            remote1.Listen = 1;//whether to play sound
+            remote1.TurnImg = 0;   //whether reverse video
+            remote1.ConnectAll();
+            remote1.Start();
         }
+
 
         var preActTime = 0;
         var bNeedStop = false;
@@ -79,12 +105,17 @@
                     <td align="center">
                         <OBJECT id="remote" name="remote" classid="clsid:1E125331-B4E3-4EE3-B3C1-24AD1A3E5DEB"
                                 WIDTH="320" HEIGHT="311">
-                            <FONT COLOR=red SIZE=5> Not installed plugin,Please click<a
+                            <!-- <FONT COLOR=red SIZE=5> Not installed plugin,Please click<a
                                     href='http://cn-download.eyecloud.so/download/application/ipcamax.exe'>here</a>download
-                                and install.</FONT>
+                                and install.</FONT> -->
                         </OBJECT>
                     </td>
-                </tr>
+                    <td align="center">
+                        <OBJECT id="remote1" name="remote1" classid="clsid:1E125331-B4E3-4EE3-B3C1-24AD1A3E5DEB"
+                                WIDTH="320" HEIGHT="311">
+                        </OBJECT>
+                    </td>
+                </tr><!-- 
                 <tr>
                     <td>
                         <table width="285" border="0" align="center" id="tbPTZ" name="tbPTZ">
@@ -119,7 +150,7 @@
                                     </table>
                                 </td>
 
-                                <td width="167">
+                                <!-- <td width="167">
                                     <table width="60" border="0" align="center">
                                         <tr>
                                             <td><input type="button" name="Zoom-" value="Zoom+"
@@ -138,40 +169,40 @@
                                                        value="Focus-"></td>
                                         </tr>
                                     </table>
-                                </td>
-                                <td width="10">&nbsp;</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <script language="JavaScript" type="text/JavaScript">
-                    var bInstall, bNewest;
-                    bNewest = false;
-                    try {
-                        remote.ClearDevs();
-                        bInstall = true;
-
-                        bNewest = remote.Ver == "<%=VER_AX_LOCALE%>";
-                    }
-                    catch (exception) {
-                        bInstall = false;
-                    }
-                    document.writeln("<tr>");
-                    document.writeln("<td align='center'><font size='2'><br/><br/>");
-                    if (bInstall && !bNewest) {
-
-                    }
-
-                    document.writeln("</font>");
-                    document.writeln("</td>");
-                    document.writeln("</tr>");
-                </script>
+                                </td> -->
+                <!--    <td width="10">&nbsp;</td>
+               </tr> -->
             </table>
         </td>
     </tr>
-    <tr>
-        <td align="center"></td>
-    </tr>
+    <script language="JavaScript" type="text/JavaScript">
+        var bInstall, bNewest;
+        bNewest = false;
+        try {
+            remote.ClearDevs();
+            bInstall = true;
+
+            bNewest = remote.Ver == "<%=VER_AX_LOCALE%>";
+        }
+        catch (exception) {
+            bInstall = false;
+        }
+        document.writeln("<tr>");
+        document.writeln("<td align='center'><font size='2'><br/><br/>");
+        if (bInstall && !bNewest) {
+
+        }
+
+        document.writeln("</font>");
+        document.writeln("</td>");
+        document.writeln("</tr>");
+    </script>
+</table>
+</td>
+</tr>
+<tr>
+    <td align="center"></td>
+</tr>
 </table>
 </td>
 <td width="18" background="images/rightline.gif">&nbsp; </td>
