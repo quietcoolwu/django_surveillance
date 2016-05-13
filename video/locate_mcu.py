@@ -47,7 +47,6 @@ def ip_scan():
                 except socket.timeout as e:
                     print 'tcp_timeout', e
                     time.sleep(2)
-
                 else:
                     print 'content', content, type(content)
                     time.sleep(1)
