@@ -34,3 +34,5 @@ def video2(request):
 
 def video3(request):
     return render(request, 'video3.html')
+
+
