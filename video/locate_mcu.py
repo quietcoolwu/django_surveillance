@@ -17,43 +17,36 @@ def ip_scan():
     s_udp.bind(('0.0.0.0', UDP_SOURCE_PORT))
     target_ip = 0
     for i in xrange(100, 150):
-        addr = (IP_HEAD + str(i), UDP_DESTINATION_PORT)
+        temp_address = (IP_HEAD + str(i), UDP_DESTINATION_PORT)
         try:
-            s_udp.sendto(DATA_UDP, addr)
+            s_udp.sendto(DATA_UDP, temp_address)
             target_ip = s_udp.recvfrom(1024)[1][0]
-        except socket.timeout as e:
-            print 'udp_timeout!' + str(i), e
         except socket.error as e:
-            print 'udp lose connection', e
+            print 'udp error!' + str(i), e
         else:
             print target_ip
             break
 
     s_udp.close()
 
-    if target_ip:
-        s_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s_tcp.settimeout(3)
-        try:
-            s_tcp.connect((target_ip, TCP_DESTINATION_PORT))
-        except socket.error as e:
-            print 'tcp lose connection!', e
-            return None
-        else:
-            while True:
-                try:
-                    s_tcp.send(DATA_TCP)
-                    content = s_tcp.recv(1024).encode('hex')
-                except socket.timeout as e:
-                    print 'tcp_timeout', e
-                    time.sleep(2)
-                else:
-                    print 'content', content, type(content)
-                    time.sleep(1)
-            return target_ip
-    else:
-        return None
+    s_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s_tcp.settimeout(3)
 
+    try:
+        s_tcp.connect((target_ip, TCP_DESTINATION_PORT))
+    except socket.error as e:
+        print 'tcp error!', e
+    else:
+        while True:
+            try:
+                s_tcp.send(DATA_TCP)
+                content = s_tcp.recv(1024).encode('hex')
+                print 'content', content, type(content)
+            except socket.error as e:
+                print 'midway error!', e
+            finally:
+                time.sleep(1)
+    
 
 if __name__ == '__main__':
     ip_scan()
