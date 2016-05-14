@@ -1,11 +1,8 @@
-import socket
-import time
 from django.http import HttpResponse
 from django.shortcuts import render
 from video.models import Article
 from datetime import datetime
 from django.http import Http404
-from .locate_mcu import ip_scan
 
 
 # Create your views here.
@@ -38,7 +35,3 @@ def video2(request):
 
 def video3(request):
     return render(request, 'video3.html')
-
-
-
-ip_scan()
