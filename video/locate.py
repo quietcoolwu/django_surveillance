@@ -32,8 +32,8 @@ class Locate(object):
                 self.ip = target_ip
                 break
 
-        time.sleep(1)
         s_udp.close()
+        time.sleep(1)
         # print 'target_ip is ', self.ip
 
     def tcp_scan(self):
