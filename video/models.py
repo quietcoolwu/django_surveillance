@@ -1,5 +1,4 @@
 # encoding: utf-8
-from __future__ import unicode_literals
 
 from django.db import models
 
@@ -13,7 +12,7 @@ class Article(models.Model):
     date_time = models.DateTimeField(auto_now_add=True)  # 日期
     content = models.TextField(blank=True, null=True)  # 文章正文
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     class Meta:  # 按时间下降排序
