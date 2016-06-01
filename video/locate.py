@@ -5,20 +5,27 @@ import time
 import json
 
 IP_HEAD = '192.168.1.'
-# DATA_UDP = bytes.fromhex('064D4243').decode('utf-8')
 DATA_UDP = '064D4243'.decode('hex')
-# DATA_TCP = '\x07\xff'
 DATA_TCP = '07FF'.decode('hex')
 UDP_SOURCE_PORT, UDP_DESTINATION_PORT = 50004, 50003
 TCP_SOURCE_PORT, TCP_DESTINATION_PORT = 50002, 50000
+WRONG_MSG = {'temperature': 'ERROR', 'moisture': 'ERROR'}
 
 
 class Locate(object):
     def __init__(self):
-        self.data_json = {'ERROR': 'ERROR'}
+        self.ip = ''
+        self.data_json = {}
+
+    @staticmethod
+    def write_json(data):
+        with open('./data.json', 'w') as f:
+            f.write(data)
 
     def udp_scan(self):
         self.ip = '0'
+        self.data_json = json.dumps(WRONG_MSG, indent=4)
+        self.write_json(self.data_json)
         s_udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s_udp.settimeout(0.04)
         s_udp.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
@@ -35,8 +42,7 @@ class Locate(object):
                 break
 
         s_udp.close()
-        time.sleep(1)
-        # print 'target_ip is ', self.ip
+        time.sleep(0.5)
 
     def tcp_scan(self):
         self.udp_scan()
@@ -60,16 +66,13 @@ class Locate(object):
                     content_list.append(rcv_content)
                     if len(content_list) > 20:
                         content_list = [content_list[-1]]
-                    # self.content = content_list
                     templist = content_list[-1]
-                    # if len(templist) == 6:
                     temperature = int(templist[2:4], 16)
                     moisture = int(templist[-2:], 16)
                     final_data = {'temperature': temperature, 'moisture': moisture}
                     self.data_json = json.dumps(final_data, indent=4)
                     print(self.data_json)
-                    with open('./data.json', 'w') as f:
-                        f.write(self.data_json)
+                    self.write_json(self.data_json)
                 finally:
                     time.sleep(1)
 
