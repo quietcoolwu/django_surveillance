@@ -12,7 +12,7 @@ class Article(models.Model):
     date_time = models.DateTimeField(auto_now_add=True)  # 日期
     content = models.TextField(blank=True, null=True)  # 文章正文
 
-    def __str__(self):
+    def __unicode__(self):
         return self.title
 
     class Meta:  # 按时间下降排序

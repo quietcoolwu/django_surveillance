@@ -5,10 +5,10 @@ import time
 import json
 
 IP_HEAD = '192.168.1.'
-DATA_UDP = bytes.fromhex('064D4243').decode('utf-8')
-# DATA_UDP = '064D4243'.decode('hex')
-DATA_TCP = '\x07\xff'
-# DATA_TCP = '07FF'.decode('hex')
+# DATA_UDP = bytes.fromhex('064D4243').decode('utf-8')
+DATA_UDP = '064D4243'.decode('hex')
+# DATA_TCP = '\x07\xff'
+DATA_TCP = '07FF'.decode('hex')
 UDP_SOURCE_PORT, UDP_DESTINATION_PORT = 50004, 50003
 TCP_SOURCE_PORT, TCP_DESTINATION_PORT = 50002, 50000
 
@@ -68,6 +68,8 @@ class Locate(object):
                     final_data = {'temperature': temperature, 'moisture': moisture}
                     self.data_json = json.dumps(final_data, indent=4)
                     print(self.data_json)
+                    with open('./data.json', 'w') as f:
+                        f.write(self.data_json)
                 finally:
                     time.sleep(1)
 
