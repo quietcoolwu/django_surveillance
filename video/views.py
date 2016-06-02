@@ -25,13 +25,9 @@ def detail(request, id):
     return render(request, 'post.html', {'post': post})
 
 
-def video1(request):
-    return render(request, 'video1.html')
-
-
-def video2(request):
-    return render(request, 'video2.html')
-
-
 def video3(request):
     return render(request, 'video3.html')
+
+
+def env(request):
+    return render(request, 'env.html')

@@ -14,8 +14,8 @@ WRONG_MSG = {'temperature': 'ERROR', 'moisture': 'ERROR'}
 
 class Locate(object):
     def __init__(self):
-        self.ip = ''
-        self.data_json = {}
+        self.ip = '0'
+        self.data_json = json.dumps(WRONG_MSG, indent=4)
 
     @staticmethod
     def write_json(data):
@@ -23,8 +23,7 @@ class Locate(object):
             f.write(data)
 
     def udp_scan(self):
-        self.ip = '0'
-        self.data_json = json.dumps(WRONG_MSG, indent=4)
+        self.__init__()
         self.write_json(self.data_json)
         s_udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s_udp.settimeout(0.04)

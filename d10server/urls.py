@@ -23,5 +23,5 @@ urlpatterns = [
     url(r'^video3/', 'video.views.video3'),
     url(r'^$', 'video.views.home', name='home'),
     url(r'^(?P<id>\d+)/$', 'video.views.detail', name='detail'),
-    url(r'^test/$', 'video.views.test'),
+    url(r'^env/$', 'video.views.env'),
 ]
