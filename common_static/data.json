@@ -1,4 +1,4 @@
 {
-    "temperature": "ERROR", 
+    "temperature": "ERROR! Please check the web connection!", 
     "moisture": "ERROR"
 }

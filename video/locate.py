@@ -9,7 +9,7 @@ DATA_UDP = '064D4243'.decode('hex')
 DATA_TCP = '07FF'.decode('hex')
 UDP_SOURCE_PORT, UDP_DESTINATION_PORT = 50004, 50003
 TCP_SOURCE_PORT, TCP_DESTINATION_PORT = 50002, 50000
-WRONG_MSG = {'temperature': 'ERROR', 'moisture': 'ERROR'}
+WRONG_MSG = {'temperature': 'ERROR! Please check the web connection!', 'moisture': 'ERROR'}
 
 
 class Locate(object):
