@@ -19,7 +19,7 @@ class Locate(object):
 
     @staticmethod
     def write_json(data):
-        with open('./data.json', 'w') as f:
+        with open('../common_static/data.json', 'w') as f:
             f.write(data)
 
     def udp_scan(self):
