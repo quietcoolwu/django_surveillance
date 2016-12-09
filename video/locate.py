@@ -4,7 +4,7 @@ import socket
 import time
 import json
 
-IP_HEAD = '192.168.1.'
+IP_HEAD = '192.168.0.'
 DATA_UDP = '064D4243'.decode('hex')
 DATA_TCP = '07FF'.decode('hex')
 UDP_SOURCE_PORT, UDP_DESTINATION_PORT = 50004, 50003
@@ -29,7 +29,7 @@ class Locate(object):
         s_udp.settimeout(0.04)
         s_udp.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
         s_udp.bind(('0.0.0.0', UDP_SOURCE_PORT))
-        for i in range(100, 150):
+        for i in range(100, 300):
             temp_address = (IP_HEAD + str(i), UDP_DESTINATION_PORT)
             try:
                 s_udp.sendto(DATA_UDP, temp_address)
