@@ -1,8 +1,10 @@
-# encoding: utf-8
+#!/usr/bin/env python
+#  encoding: utf-8
 
+import json
+import os
 import socket
 import time
-import json
 
 IP_HEAD = '192.168.0.'
 DATA_UDP = '064D4243'.decode('hex')
@@ -19,7 +21,7 @@ class Locate(object):
 
     @staticmethod
     def write_json(data):
-        with open('../common_static/data.json', 'w') as f:
+        with open('../static/data.json', 'w') as f:
             f.write(data)
 
     def udp_scan(self):
@@ -29,7 +31,7 @@ class Locate(object):
         s_udp.settimeout(0.04)
         s_udp.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
         s_udp.bind(('0.0.0.0', UDP_SOURCE_PORT))
-        for i in range(100, 300):
+        for i in range(100, 256):
             temp_address = (IP_HEAD + str(i), UDP_DESTINATION_PORT)
             try:
                 s_udp.sendto(DATA_UDP, temp_address)
