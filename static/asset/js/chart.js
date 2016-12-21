@@ -15,7 +15,7 @@ $(function () {
         a % t == 0 && (e.push(o.time), n.push(o.tmp), i.push(o.hmt))
       });
       var o = echarts.init(document.getElementById("main"));
-      option = {
+      let option = {
         title: {text: "", subtext: ""},
         tooltip: {trigger: "axis"},
         legend: {data: ["温度", "湿度"]},
@@ -42,7 +42,8 @@ $(function () {
           data: i,
           markPoint: {data: [{type: "max", name: "最大值"}, {type: "min", name: "最小值"}]}
         }]
-      }, o.setOption(option)
+      };
+      o.setOption(option)
     })
   }
 

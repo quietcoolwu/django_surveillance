@@ -2,53 +2,51 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A layout example that shows off a blog page with a list of posts.">
-
-    <title>BUPT D10 Surveillance System</title>
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
-    <link rel="stylesheet" href="http://picturebag.qiniudn.com/blog.css">
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A layout example that shows off a blog page with a list of posts.">
+  <title>BUPT D10 Surveillance System</title>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/pure/0.5.0/pure-min.css">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/pure/0.5.0/grids-responsive-min.css">
+  <link rel="stylesheet" href="http://picturebag.qiniudn.com/blog.css">
 </head>
 
 <body>
 <div id="layout" class="pure-g">
-    <div class="sidebar pure-u-1 pure-u-md-1-4">
-        <div class="header">
-            <h1 class="brand-title"><a href="{% url "home" %}">BUPT D10 Surveillance System</a></h1>
-            <h2 class="brand-tagline">BUPT D10</h2>
-            <nav class="nav">
-                <ul class="nav-list">
-                    <li class="nav-item">
-                        <a class="pure-button" href="/">主页</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="pure-button" href="env" target="_blank">当前温湿度</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="pure-button" href="video" target="_blank">视频</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+  <div class="sidebar pure-u-1 pure-u-md-1-4">
+    <div class="header">
+      <h1 class="brand-title"><a href="{% url "home" %}">BUPT D10 Surveillance System</a></h1>
+      <h2 class="brand-tagline">BUPT D10</h2>
+      <nav class="nav">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a class="pure-button" href="/">主页</a>
+          </li>
+          <li class="nav-item">
+            <a class="pure-button" href="env" target="_blank">当前温湿度</a>
+          </li>
+          <li class="nav-item">
+            <a class="pure-button" href="video" target="_blank">视频</a>
+          </li>
+        </ul>
+      </nav>
     </div>
-    <div class="content pure-u-1 pure-u-md-3-4">
-        <div>
-            {% block content %}
-            {% endblock %}
-            <div class="footer">
-                <div class="pure-menu pure-menu-horizontal pure-menu-open">
-                    <ul>
-                        <li><a href="http://github.com/quietcoolwu/">About Me</a></li>
-                        <li><a href="http://twitter.com/quietcool/">Twitter</a></li>
-                        <li><a href="http://github.com/yahoo/pure/">Pure</a></li>
-                    </ul>
-                </div>
-            </div>
+  </div>
+  <div class="content pure-u-1 pure-u-md-3-4">
+    <div>
+      {% block content %}
+      {% endblock %}
+      <div class="footer">
+        <div class="pure-menu pure-menu-horizontal pure-menu-open">
+          <ul>
+            <li><a href="http://github.com/quietcoolwu/">About Me</a></li>
+            <li><a href="http://twitter.com/quietcool/">Twitter</a></li>
+            <li><a href="http://github.com/yahoo/pure/">Pure</a></li>
+          </ul>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 </body>
 </html>
