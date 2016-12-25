@@ -21,14 +21,14 @@ class Locate(object):
     def __init__(self):
         self.ip = '0'
 
-    def active_writing(self, temperature, humidity, plc_data, flag):
+    def active_writing(self, temperature, humidity, flag):
         # if humidity is not None and temperature is not None:
         today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
         data = {
             "time": time.strftime('%H:%M', time.localtime(time.time())),
             "tmp": str(temperature),
             "hmt": str(humidity),
-            "plc_data": str(plc_data)
+            # "plc_data": str(plc_data)
         }
         if not flag:
             self.json_write(data, today, time_scope="min")
@@ -99,7 +99,7 @@ class Locate(object):
                     humidity = int(rcv_content[4:6], 16)
                     plc_data = int(rcv_content[6:], 16)
                     print(rcv_content, timer, temperature, humidity, plc_data)
-                    self.active_writing(temperature, humidity, plc_data, flag=timer % 3600 < 5)
+                    self.active_writing(temperature, humidity, flag=timer % 3600 < 5)
                 finally:
                     time.sleep(10)
                     timer += 10
