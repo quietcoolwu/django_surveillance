@@ -1,20 +1,20 @@
 #!/usr/bin/env python
 #  encoding: utf-8
 
-from __future__ import print_function
+from __future__ import print_function, unicode_literals
 
 import json
 import os
 import socket
 import time
 
-IP_HEAD = '192.168.0.'
+IP_HEAD = '192.168.4.'
 DATA_UDP = '064D4243'.decode('hex')
 DATA_ENV_TCP = '07FF'.decode('hex')
 UDP_SOURCE_PORT, UDP_TARGET_PORT = 50004, 50003
 TCP_SOURCE_PORT, TCP_TARGET_PORT = 50002, 50000
 pardir = os.path.abspath(os.path.join(os.path.dirname('__file__'), os.path.pardir))
-DATA_PATH = os.path.join(pardir, r'static/data/')
+DATA_PATH = os.path.join(pardir, 'static/data/')
 
 
 class Locate(object):
@@ -89,16 +89,19 @@ class Locate(object):
             while True:
                 try:
                     s_env_tcp.send(DATA_ENV_TCP)
-                    rcv_content = s_env_tcp.recv(1024).encode('hex')
+                    rcv_all_hex = s_env_tcp.recv(1024).encode('hex')
+                    env_info = rcv_all_hex[:6]
+                    print(rcv_all_hex[6:])
+                    print(rcv_all_hex[6:].decode('hex'))
                 except socket.error as e:
                     print('TCP MIDWAY ERROR!Trying to reconnect...', e)
                     self.tcp_scan()
                 else:
                     # hex to dec
-                    temperature = int(rcv_content[2:4], 16)
-                    humidity = int(rcv_content[4:6], 16)
-                    plc_data = int(rcv_content[6:], 16)
-                    print(rcv_content, timer, temperature, humidity, plc_data)
+                    temperature = int(env_info[2:4], 16)
+                    humidity = int(env_info[4:6], 16)
+                    # plc_data = int(env_info[6:], 16)
+                    print(env_info, timer, temperature, humidity)
                     self.active_writing(temperature, humidity, flag=timer % 3600 < 5)
                 finally:
                     time.sleep(10)
