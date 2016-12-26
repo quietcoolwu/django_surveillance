@@ -1,3 +1,7 @@
+/**
+ * Created by wukai on 2016/12/26.
+ */
+
 $(function () {
   function a(a) {
     var t, e = a.getYear();
@@ -14,8 +18,8 @@ $(function () {
       $.each(a, function (a, o) {
         a % t == 0 && (e.push(o.time), n.push(o.tmp), i.push(o.hmt))
       });
-      var o = echarts.init(document.getElementById("main"));
-      let option = {
+      var o = echarts.init(document.getElementById("plc_data"));
+      var option = {
         title: {text: "", subtext: ""},
         tooltip: {trigger: "axis"},
         legend: {data: ["温度", "湿度"]},
