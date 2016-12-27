@@ -14,5 +14,13 @@
     "gun_location": "1852.21",
     "time": "16:13",
     "input_material_speed": "2.1"
+  },
+  {
+    "tmp": "24",
+    "gun_speed": "1800",
+    "hmt": "30",
+    "gun_location": "1852.21",
+    "time": "17:32",
+    "input_material_speed": "2.1"
   }
 ]

@@ -18,7 +18,7 @@ $(function () {
       var option = {
         title: {text: "", subtext: ""},
         tooltip: {trigger: "axis"},
-        legend: {data: ["温度", "湿度"]},
+        legend: {data: ["温度(C)", "湿度(%)"]},
         toolbox: {
           show: !0,
           feature: {
@@ -32,12 +32,12 @@ $(function () {
         xAxis: {type: "category", boundaryGap: !1, data: e},
         yAxis: {type: "value", axisLabel: {formatter: "{value} °C"}},
         series: [{
-          name: "温度",
+          name: "温度(C)",
           type: "line",
           data: n,
           markPoint: {data: [{type: "max", name: "最大值"}, {type: "min", name: "最小值"}]}
         }, {
-          name: "湿度",
+          name: "湿度(%)",
           type: "line",
           data: i,
           markPoint: {data: [{type: "max", name: "最大值"}, {type: "min", name: "最小值"}]}
