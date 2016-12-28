@@ -1,161 +1,161 @@
 <html>
 <head>
-    <script language="JavaScript" type="text/JavaScript">
-        var VER_AX_LOCALE = "1.1.15.174";//the version of the ActiveX
-        var szDevIP = "VSTB466986TEXJY"; //serial ID or ip of ip camera
-        var nPort = 81; //the HTTP port of ip camera, if the szDevIP is serial ID, this will be ignore
-        var szAuthAcc = "admin", szAuthPwd = "888888";//account of ip camera
-        var nImgW = 720, nImgH = 540;//the window size of ip camera.
-        var szDevName = "SDK";//the caption shown on the video
-        var nDevType = 922;
-        var bInLan = 0;//whether in LAN,1:LAN,0:WAN
+  <script language="JavaScript" type="text/JavaScript">
+    var VER_AX_LOCALE = "1.1.15.174";//the version of the ActiveX
+    var szDevIP = "VSTB466986TEXJY"; //serial ID or ip of ip camera
+    var nPort = 81; //the HTTP port of ip camera, if the szDevIP is serial ID, this will be ignore
+    var szAuthAcc = "admin", szAuthPwd = "888888";//account of ip camera
+    var nImgW = 720, nImgH = 540;//the window size of ip camera.
+    var szDevName = "SDK";//the caption shown on the video
+    var nDevType = 922;
+    var bInLan = 0;//whether in LAN,1:LAN,0:WAN
 
-        var VER_AX_LOCALE1 = "1.1.15.174";//the version of the ActiveX
-        var szDevIP1 = "VSTB466981YRDDM"; //serial ID or ip of ip camera
-        var nPort1 = 81; //the HTTP port of ip camera, if the szDevIP is serial ID, this will be ignore
-        var szAuthAcc1 = "admin", szAuthPwd1 = "888888";//account of ip camera
-        var nImgW1 = 720, nImgH1 = 540;//the window size of ip camera.
-        var szDevName1 = "SDK";//the caption shown on the video
-        var nDevType1 = 922;
-        var bInLan1 = 0;//whether in LAN,1:LAN,0:WAN
+    var VER_AX_LOCALE1 = "1.1.15.174";//the version of the ActiveX
+    var szDevIP1 = "VSTB466981YRDDM"; //serial ID or ip of ip camera
+    var nPort1 = 81; //the HTTP port of ip camera, if the szDevIP is serial ID, this will be ignore
+    var szAuthAcc1 = "admin", szAuthPwd1 = "888888";//account of ip camera
+    var nImgW1 = 720, nImgH1 = 540;//the window size of ip camera.
+    var szDevName1 = "SDK";//the caption shown on the video
+    var nDevType1 = 922;
+    var bInLan1 = 0;//whether in LAN,1:LAN,0:WAN
 
 
-        function ShowDev() {
-            try {
-                remote.ClearDevs();
-                remote1.ClearDevs()
-            }
-            catch (exception) {
-                return;
-            }
+    function ShowDev() {
+      try {
+        remote.ClearDevs();
+        remote1.ClearDevs()
+      }
+      catch (exception) {
+        return;
+      }
 
 //	remote.ShowTitle = 0;
-            remote.Lan = "cn";  //language cn:chinese en:english jp:japanese
-            remote.ShowOSDName = 1;//whether to show ipcam caption on the video
-            remote.SwitchLayout("1 x 1");
-            remote.Width = nImgW;  //width of the window
-            remote.Height = nImgH; //height of the window
+      remote.Lan = "cn";  //language cn:chinese en:english jp:japanese
+      remote.ShowOSDName = 1;//whether to show ipcam caption on the video
+      remote.SwitchLayout("1 x 1");
+      remote.Width = nImgW;  //width of the window
+      remote.Height = nImgH; //height of the window
 //AddDev4(IP Camera mode (903:M; 902:F; 901:E; 904:V; 905:A),LAN,serial ID or IP, HTTP port, display name, account,password,channel)   	
-            remote.ShowToolBar = 1;//whether to show toolbar
-            remote.AddDev4(nDevType, bInLan, szDevIP, nPort, szDevName, szAuthAcc, szAuthPwd, 1);
-            remote.Listen = 1;//whether to play sound
-            remote.TurnImg = 0;   //whether reverse video
-            remote.ConnectAll();
-            remote.Start();
+      remote.ShowToolBar = 1;//whether to show toolbar
+      remote.AddDev4(nDevType, bInLan, szDevIP, nPort, szDevName, szAuthAcc, szAuthPwd, 1);
+      remote.Listen = 1;//whether to play sound
+      remote.TurnImg = 0;   //whether reverse video
+      remote.ConnectAll();
+      remote.Start();
 
-            //	remote1.ShowTitle = 0;
-            remote1.Lan = "cn";  //language cn:chinese en:english jp:japanese
-            remote1.ShowOSDName = 1;//whether to show ipcam caption on the video
-            remote1.SwitchLayout("1 x 1");
-            remote1.Width = nImgW;  //width of the window
-            remote1.Height = nImgH; //height of the window
+      //	remote1.ShowTitle = 0;
+      remote1.Lan = "cn";  //language cn:chinese en:english jp:japanese
+      remote1.ShowOSDName = 1;//whether to show ipcam caption on the video
+      remote1.SwitchLayout("1 x 1");
+      remote1.Width = nImgW;  //width of the window
+      remote1.Height = nImgH; //height of the window
 //AddDev4(IP Camera mode (903:M; 902:F; 901:E; 904:V; 905:A),LAN,serial ID or IP, HTTP port, display name, account,password,channel)   	
-            remote1.ShowToolBar = 1;//whether to show toolbar
-            remote1.AddDev4(nDevType1, bInLan1, szDevIP1, nPort1, szDevName1, szAuthAcc1, szAuthPwd1, 1);
-            remote1.Listen = 1;//whether to play sound
-            remote1.TurnImg = 0;   //whether reverse video
-            remote1.ConnectAll();
-            remote1.Start();
-        }
+      remote1.ShowToolBar = 1;//whether to show toolbar
+      remote1.AddDev4(nDevType1, bInLan1, szDevIP1, nPort1, szDevName1, szAuthAcc1, szAuthPwd1, 1);
+      remote1.Listen = 1;//whether to play sound
+      remote1.TurnImg = 0;   //whether reverse video
+      remote1.ConnectAll();
+      remote1.Start();
+    }
 
 
-        var preActTime = 0;
-        var bNeedStop = false;
-        function StopAction() {
+    var preActTime = 0;
+    var bNeedStop = false;
+    function StopAction() {
 //	alert("a");
-            remote.PTZ(1, 1, -1, 0, 0, 0);
-            bNeedStop = false;
-        }
+      remote.PTZ(1, 1, -1, 0, 0, 0);
+      bNeedStop = false;
+    }
 
-        //set action and send to ipcam
-        function setAction(action, time) {
-            if ((action == -1) && (!bNeedStop))
-                return 0;
+    //set action and send to ipcam
+    function setAction(action, time) {
+      if ((action == -1) && (!bNeedStop))
+        return 0;
 
-            var now_time = new Date();
-            //alert(now_time - preActTime);
-            if ((preActTime > 0) && (now_time - preActTime < 300)) {
-                //alert(now_time-preActTime);
-                if (action == -1) {
+      var now_time = new Date();
+      //alert(now_time - preActTime);
+      if ((preActTime > 0) && (now_time - preActTime < 300)) {
+        //alert(now_time-preActTime);
+        if (action == -1) {
 //			alert(now_time-preActTime);
-                    setTimeout('StopAction();', 500);
-                    return 0;
-                }
-                else
-                    return 0;
-            }
-
-            remote.PTZ(1, 1, action, time, 0, 0);
-//Set pause time  
-            bNeedStop = action != -1;
-            preActTime = now_time;
+          setTimeout('StopAction();', 500);
+          return 0;
         }
-    </script>
-    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+        else
+          return 0;
+      }
+
+      remote.PTZ(1, 1, action, time, 0, 0);
+//Set pause time  
+      bNeedStop = action != -1;
+      preActTime = now_time;
+    }
+  </script>
+  <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 </head>
 
 <body leftmargin="0" topmargin="0" onload="ShowDev()">
 <table width="100%" border="0" align="center">
-    <tr>
-        <td align="center"></td>
-    </tr>
-    <tr>
-        <td>
-            <table width="800" border="0" Align="left">
-                <tr>
-                    <td align="center">
-                        <OBJECT id="remote" name="remote" classid="clsid:1E125331-B4E3-4EE3-B3C1-24AD1A3E5DEB"
-                                WIDTH="320" HEIGHT="311">
-                            <FONT COLOR=red SIZE=5> Not installed plugin,Please click<a
-                                    href='http://cn-download.eyecloud.so/download/application/ipcamax.exe'>here</a>download
-                                and install.</FONT>
-                        </OBJECT>
-                    </td>
-                    <td align="center">
-                        <OBJECT id="remote1" name="remote1" classid="clsid:1E125331-B4E3-4EE3-B3C1-24AD1A3E5DEB"
-                                WIDTH="320" HEIGHT="311">
-                        </OBJECT>
-                    </td>
-                </tr>
+  <tr>
+    <td align="center"></td>
+  </tr>
+  <tr>
+    <td>
+      <table width="800" border="0" Align="left">
+        <tr>
+          <td align="center">
+            <OBJECT id="remote" name="remote" classid="clsid:1E125331-B4E3-4EE3-B3C1-24AD1A3E5DEB"
+                    WIDTH="320" HEIGHT="311">
+              <FONT COLOR=red SIZE=5> Not installed plugin,Please click<a
+                href='http://cn-download.eyecloud.so/download/application/ipcamax.exe'>here</a>download
+                and install.</FONT>
+            </OBJECT>
+          </td>
+          <td align="center">
+            <OBJECT id="remote1" name="remote1" classid="clsid:1E125331-B4E3-4EE3-B3C1-24AD1A3E5DEB"
+                    WIDTH="320" HEIGHT="311">
+            </OBJECT>
+          </td>
+        </tr>
 
-            </table>
-        </td>
-    </tr>
-    <script language="JavaScript" type="text/JavaScript">
-        var bInstall, bNewest;
-        bNewest = false;
-        try {
-            remote.ClearDevs();
-            bInstall = true;
+      </table>
+    </td>
+  </tr>
+  <script language="JavaScript" type="text/JavaScript">
+    var bInstall, bNewest;
+    bNewest = false;
+    try {
+      remote.ClearDevs();
+      bInstall = true;
 
-            bNewest = remote.Ver == "<%=VER_AX_LOCALE%>";
-        }
-        catch (exception) {
-            bInstall = false;
-        }
-        document.writeln("<tr>");
-        document.writeln("<td align='center'><font size='2'><br/><br/>");
-        if (bInstall && !bNewest) {
+      bNewest = remote.Ver == "<%=VER_AX_LOCALE%>";
+    }
+    catch (exception) {
+      bInstall = false;
+    }
+    document.writeln("<tr>");
+    document.writeln("<td align='center'><font size='2'><br/><br/>");
+    if (bInstall && !bNewest) {
 
-        }
+    }
 
-        document.writeln("</font>");
-        document.writeln("</td>");
-        document.writeln("</tr>");
-    </script>
+    document.writeln("</font>");
+    document.writeln("</td>");
+    document.writeln("</tr>");
+  </script>
 </table>
 
 <tr>
-    <td align="center"></td>
+  <td align="center"></td>
 </tr>
 <td width="18" background="images/rightline.gif">&nbsp; </td>
 <tr>
-    <td width="16" height="20" background="images/corner_bl.gif">&nbsp; </td>
-    <td background="images/bottomline.gif">&nbsp; </td>
-    <td width="18" background="images/corner_br.gif">&nbsp; </td>
+  <td width="16" height="20" background="images/corner_bl.gif">&nbsp; </td>
+  <td background="images/bottomline.gif">&nbsp; </td>
+  <td width="18" background="images/corner_br.gif">&nbsp; </td>
 </tr>
 <script language="jscript" FOR="remote" event="OnClick">
-    //alert("clicked on Activex");
+  //alert("clicked on Activex");
 </script>
 </body>
 </html>

@@ -60,7 +60,7 @@ class Locate(object):
     def udp_scan(self):
         self.__init__()
         s_udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s_udp.settimeout(0.05)
+        s_udp.settimeout(0.2)
         s_udp.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
         s_udp.bind(('0.0.0.0', UDP_SOURCE_PORT))
         for i in range(100, 256):
@@ -75,7 +75,7 @@ class Locate(object):
                 break
 
         s_udp.close()
-        # time.sleep(0.5)
+        time.sleep(0.5)
         return None
 
     def tcp_scan(self):
