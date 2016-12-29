@@ -33,6 +33,7 @@ class Locate(object):
             "gun_speed": str(plc_data[1]),  # mm/s
             "gun_location": str(plc_data[3] / 100),  # mm
         }
+        print(data)
         if not flag:
             self.json_write(data, today, time_scope="min")
         else:
@@ -107,7 +108,7 @@ class Locate(object):
                     # hex to dec
                     temperature = int(env_info[2:4], 16)
                     humidity = int(env_info[4:6], 16)
-                    print(env_info, timer, temperature, humidity, plc_data)
+                    # print(env_info, timer, temperature, humidity, plc_data)
                     self.active_writing(temperature, humidity, plc_data, flag=timer % 3600 < 5)
                 finally:
                     time.sleep(10)
@@ -123,7 +124,10 @@ class Locate(object):
             # split and reverse high and low digits
             slice_2 = re.findall(r'.{2}', each)
             pre_hex = ''.join(slice_2[::-1])
-            plc_data_int.append(int(pre_hex, base=16))
+            tmp = int(pre_hex, base=16)
+            if tmp > 20000:
+                tmp -= pow(2, 32)
+            plc_data_int.append(tmp)
         return plc_data_int
 
 
