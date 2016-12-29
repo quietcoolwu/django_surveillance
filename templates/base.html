@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../static/asset/css/pure-min.css">
   <link rel="stylesheet" href="../static/asset/css/grids-responsive-min.css">
   <link rel="stylesheet" href="../static/asset/css/blog.css">
+  <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
 </head>
 
 <body>
@@ -16,7 +17,7 @@
   <div class="sidebar pure-u-1 pure-u-md-1-4">
     <div class="header">
       <h1 class="brand-title"><a href="{% url "home" %}">广东顺德迪峰机械有限公司</a></h1>
-      <h2 class="brand-tagline">DIFENG TEST</h2>
+      <h2 class="brand-tagline">生产线监控与核算系统</h2>
       <nav class="nav">
         <ul class="nav-list">
           <li class="nav-item">
@@ -36,6 +37,66 @@
     <div>
       {% block content %}
       {% endblock %}
+      <p>{% now "SHORT_DATETIME_FORMAT" %} 订单情况</p>
+      <label class="dropdown">
+        <select>
+          <option>请选择查询日期</option>
+          <option>ABB</option>
+          <option>SANSUI</option>
+          <option>BOSCH</option>
+          <option>Others</option>
+        </select>
+      </label>
+      <br><br>
+      <table class="pure-table pure-table-striped">
+        <thead>
+        <tr>
+          <th>当前业务名称</th>
+          <th>当日生产量／当日计划量</th>
+          <th>总生产量／总计划量</th>
+          <th>任务所属机床位</th>
+          <th>预计完成时间/要求完成时间</th>
+          <th>当日盈亏</th>
+          <th>总盈亏</th>
+          <th>备注</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+          <td>ABB 1号流水线需求</td>
+          <td>17/30</td>
+          <td>140/300</td>
+          <td>10 12 13</td>
+          <td>2017-02-03</td>
+          <td>+2000.00</td>
+          <td>+200000.00</td>
+          <td>待定</td>
+        </tr>
+
+        <tr>
+          <td>BOSCH 9号流水线需求</td>
+          <td>14/40</td>
+          <td>130/400</td>
+          <td>5 8 11</td>
+          <td>2017-01-25</td>
+          <td>+3000.00</td>
+          <td>+500000.00</td>
+          <td>待定</td>
+        </tr>
+
+        <tr>
+          <td>SANSUI 7号流水线需求</td>
+          <td>15/20</td>
+          <td>200/500</td>
+          <td>7 9</td>
+          <td>2017-01-18</td>
+          <td>+5000.00</td>
+          <td>+700000.00</td>
+          <td>待定</td>
+        </tr>
+        </tbody>
+      </table>
       <div class="footer">
         <div class="pure-menu pure-menu-horizontal pure-menu-open">
           <ul>
