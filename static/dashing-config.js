@@ -4,13 +4,13 @@
 
 /* global Dashboard */
 
-var dashboard = new Dashboard();
+let dashboard = new Dashboard();
 
 dashboard.addWidget('clock_widget', 'Clock');
 
 dashboard.addWidget('new_users_widget', 'Number', {
   getData: function () {
-    var self = this;
+    let self = this;
     Dashing.utils.get('new_users_widget', function (scope) {
       $.extend(self.scope, scope);
     });

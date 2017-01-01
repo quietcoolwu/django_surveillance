@@ -13,10 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+
+from __future__ import absolute_import
 from dashing.utils import router
 from django.conf.urls import url, include
 from django.contrib import admin
-from django.views.generic.base import RedirectView
+from video import views as video_views
+# from django.views.generic.base import RedirectView
 
 from .widgets import NewClientsWidget
 
@@ -24,10 +27,10 @@ router.register(NewClientsWidget, 'new_users_widget')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^video/', 'video.views.video'),
-    url(r'^$', 'video.views.home', name='home'),
-    url(r'^(?P<id>\d+)/$', 'video.views.detail', name='detail'),
-    url(r'^env/$', 'video.views.env'),
+    url(r'^video/', video_views.video),
+    url(r'^$', video_views.home, name='home'),
+    url(r'^(?P<id>\d+)/$', video_views.detail, name='detail'),
+    url(r'^env/$', video_views.env),
     url(r'^dashboard/', include(router.urls), name='dashboard'),
-    url(r'^$', RedirectView.as_view(url='dashboard/'), name='index')
+    # url(r'^$', RedirectView.as_view(url='dashboard/'), name='index')
 ]
