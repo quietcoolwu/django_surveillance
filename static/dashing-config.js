@@ -22,10 +22,10 @@ dashboard.addWidget('buzzwords_widget', 'List', {
   getData: function () {
     $.extend(this.scope, {
       title: 'Buzzwords关键词',
-      more_info: '# of times said around the office',
-      updated_at: 'Last updated at 18:58',
-      data: [{label: 'Exit strategy', value: 24},
-        {label: 'Web 2.0', value: 15},
+      // more_info: '# of times said around the office',
+      // updated_at: 'Last updated at 18:58',
+      data: [{label: 'Exit strategy', value: 220},
+        {label: 'Web 2.0', value: 20},
         {label: 'Turn-key', value: 2},
         {label: 'Enterprise', value: 12},
         {label: 'Pivoting', value: 3},
@@ -34,13 +34,31 @@ dashboard.addWidget('buzzwords_widget', 'List', {
         {label: 'Paradigm shift', value: 6},
         {label: 'Synergy', value: 7}]
     });
-  }
+  },
+  interval: 4000
 });
 
 dashboard.addWidget('convergence_widget', 'Graph', {
   getData: function () {
     $.extend(this.scope, {
       title: 'Convergence',
+      value: Math.floor(Math.random() * 50) + 40,
+      more_info: '',
+      data: [
+        {x: 0, y: Math.floor(Math.random() * 50) + 40},
+        {x: 1, y: Math.floor(Math.random() * 50) + 40},
+        {x: 2, y: Math.floor(Math.random() * 50) + 40},
+        {x: 3, y: Math.floor(Math.random() * 50) + 40},
+        {x: 4, y: Math.floor(Math.random() * 50) + 40}
+      ]
+    });
+  }
+});
+
+dashboard.addWidget('convergence_widget', 'Graph', {
+  getData: function () {
+    $.extend(this.scope, {
+      title: 'Convergence_1',
       value: Math.floor(Math.random() * 50) + 40,
       more_info: '',
       data: [

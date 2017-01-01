@@ -126,4 +126,7 @@ STATICFILES_DIRS = (
 
 DASHING = {
     'INSTALLED_WIDGETS': ('number', 'list', 'graph', 'clock', 'weather'),
+    'PERMISSION_CLASSES': (
+        'dashing.permissions.AllowAny',
+    )
 }
