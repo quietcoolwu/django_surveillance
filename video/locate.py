@@ -2,6 +2,7 @@
 #  encoding: utf-8
 
 from __future__ import print_function, unicode_literals, division
+from d10server.settings import BASE_DIR
 
 import json
 import os
@@ -14,8 +15,8 @@ DATA_UDP = '064D4243'.decode('hex')
 DATA_ENV_TCP = '07FF'.decode('hex')
 UDP_SOURCE_PORT, UDP_TARGET_PORT = 50004, 50003
 TCP_SOURCE_PORT, TCP_TARGET_PORT = 50002, 50000
-pardir = os.path.abspath(os.path.join(os.path.dirname('__file__'), os.path.pardir))
-DATA_PATH = os.path.join(pardir, r'static/data/')
+# pardir = os.path.abspath(os.path.join(os.path.dirname('__file__'), os.path.pardir))
+DATA_PATH = os.path.join(BASE_DIR, r'static/data/')
 
 
 class Locate(object):
@@ -33,7 +34,7 @@ class Locate(object):
             "gun_speed": str(plc_data[1]),  # mm/s
             "gun_location": str(plc_data[3] / 100),  # mm
         }
-        print(data)
+        print(data, DATA_PATH)
         if not flag:
             self.json_write(data, today, time_scope="min")
         else:
@@ -41,20 +42,19 @@ class Locate(object):
 
     @staticmethod
     def json_write(data, today, time_scope):
-        file_path = os.path.join(DATA_PATH, time_scope, (today + r'.json'))
-        # print(file_path)
-        if os.path.exists(file_path):
-            out = open(file_path, "rb+")
+        log_path = os.path.join(DATA_PATH, time_scope, (today + r'.json'))
+        if os.path.exists(log_path):
+            out = open(log_path, "rb+")
             out.seek(-1, os.SEEK_END)
             out.truncate()
             out.write(str(','))
-            json.dump(data, out)
+            json.dump(data, out, sort_keys=True)
             out.write(str(']'))
             out.close()
         else:
-            out = open(file_path, "w")
+            out = open(log_path, "w")
             out.write(str('['))
-            json.dump(data, out)
+            json.dump(data, out, sort_keys=True)
             out.write(str(']'))
             out.close()
 
@@ -79,16 +79,16 @@ class Locate(object):
         time.sleep(0.5)
         return None
 
-    def tcp_scan(self):
+    def tcp_connect(self):
         self.udp_scan()
         s_env_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s_env_tcp.settimeout(2)
+        s_env_tcp.settimeout(8)
         timer = 0
         try:
             s_env_tcp.connect((self.ip, TCP_TARGET_PORT))
         except socket.error as e:
             print('TCP initial ERROR!Trying to reconnect...', e)
-            self.tcp_scan()
+            self.tcp_connect()
         else:
             while True:
                 try:
@@ -96,14 +96,16 @@ class Locate(object):
                     rcv_all_hex = s_env_tcp.recv(1024).encode('hex')
                     env_info = rcv_all_hex[:6]
                     # only hex2char: data from plc
+                    # temperature and humidity not included
                     # plc_data_hex like: 15000000080700000000000085D30200
                     plc_data_hex = rcv_all_hex[6:].decode('hex')
+                    assert len(plc_data_hex) == 32
                     # slice plc_data_hex
                     plc_hex_slice = re.findall(r'.{8}', plc_data_hex)
                     plc_data = self.plc_data_convert(plc_hex_slice)
                 except socket.error as e:
                     print('TCP MIDWAY ERROR!Trying to reconnect...', e)
-                    self.tcp_scan()
+                    self.tcp_connect()
                 else:
                     # hex to dec
                     temperature = int(env_info[2:4], 16)
@@ -115,22 +117,29 @@ class Locate(object):
                     timer += 10
                     if timer > pow(2, 30):
                         timer = 0
+
         return None
 
-    @staticmethod
-    def plc_data_convert(plc_data_slice):
-        plc_data_int = list()
+    def plc_data_convert(self, plc_data_slice):
+        plc_data = list()
         for each in plc_data_slice:
             # split and reverse high and low digits
-            slice_2 = re.findall(r'.{2}', each)
-            pre_hex = ''.join(slice_2[::-1])
-            tmp = int(pre_hex, base=16)
-            if tmp > 20000:
-                tmp -= pow(2, 32)
-            plc_data_int.append(tmp)
-        return plc_data_int
+            sub_slice = re.findall(r'.{2}', each)
+            pre_hex = ''.join(sub_slice[::-1])
+            raw_data = int(pre_hex, base=16)
+            # if raw_data > 20000:
+            #     raw_data -= pow(2, 32)
+            plc_data.append(self.int_overflow(raw_data))
+        return plc_data
+
+    @staticmethod
+    def int_overflow(val):
+        maxint = pow(2, 31) - 1
+        if not -maxint - 1 <= val <= maxint:
+            val = (val + (maxint + 1)) % (2 * (maxint + 1)) - maxint - 1
+        return val
 
 
 if __name__ == '__main__':
     x = Locate()
-    x.tcp_scan()
+    x.tcp_connect()

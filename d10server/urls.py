@@ -21,9 +21,10 @@ from django.contrib import admin
 from video import views as video_views
 # from django.views.generic.base import RedirectView
 
-from .widgets import NewClientsWidget
+from .widgets import NewClientsWidget, PLCDataWidget
 
 router.register(NewClientsWidget, 'new_users_widget')
+router.register(PLCDataWidget, 'plc_data_widget')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
