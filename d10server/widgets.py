@@ -12,8 +12,6 @@ from dashing.widgets import ListWidget, NumberWidget
 
 from settings import BASE_DIR
 
-users = random.randint(50, 100)
-timer = 0
 DATA_MIN_PATH = os.path.join(BASE_DIR, r'static/data/min/')
 EN_CN_MAPPING = {'tmp': r'温度(C)',
                  'gun_speed': r'枪架速度(mm/s)',
@@ -24,29 +22,23 @@ EN_CN_MAPPING = {'tmp': r'温度(C)',
 
 
 class NewClientsWidget(NumberWidget):
-    title = 'New Users'
+    title = '当前监控车床数'
 
     def get_value(self):
-        global users
-        users += 1
-        return users
+        return '{}'.format(random.randint(10, 100))
 
     def get_detail(self):
-        global users
-        return '{} actives'.format(users // 3)
+        return '{}个枪架'.format(random.randint(10, 100))
 
     def get_more_info(self):
-        global users
-        return '{} fakes'.format(users // 10)
+        return '{}个PLC系统'.format(random.randint(10, 100))
 
 
 class PLCDataWidget(ListWidget):
-    title = 'PLC 数据监控表'
+    title = '智能数据监控板'
     more_info = 'PLC 数据实时监控'
 
     def get_data(self):
-        global timer
-        timer += 1
         # test_flag
         test_flag = True
         today = time.strftime('%Y-%m-%d', time.localtime(time.time()))

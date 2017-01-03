@@ -15,7 +15,7 @@ dashboard.addWidget('new_users_widget', 'Number', {
       $.extend(self.scope, scope);
     });
   },
-  interval: 5000
+  interval: 3017
 });
 
 dashboard.addWidget('plc_data_widget', 'List', {
@@ -26,7 +26,7 @@ dashboard.addWidget('plc_data_widget', 'List', {
       // console.log(scope.data);
     });
   },
-  interval: 2000
+  interval: 2013
 });
 
 dashboard.addWidget('convergence_widget', 'Graph', {
