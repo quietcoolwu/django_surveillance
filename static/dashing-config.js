@@ -23,9 +23,10 @@ dashboard.addWidget('plc_data_widget', 'List', {
     let self = this;
     Dashing.utils.get('plc_data_widget', function (scope) {
       $.extend(self.scope, scope);
+      // console.log(self.scope,scope);
     });
   },
-  interval: 2000
+  interval: 4000
 });
 
 dashboard.addWidget('convergence_widget', 'Graph', {

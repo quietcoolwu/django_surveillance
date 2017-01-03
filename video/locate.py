@@ -15,7 +15,6 @@ DATA_UDP = '064D4243'.decode('hex')
 DATA_ENV_TCP = '07FF'.decode('hex')
 UDP_SOURCE_PORT, UDP_TARGET_PORT = 50004, 50003
 TCP_SOURCE_PORT, TCP_TARGET_PORT = 50002, 50000
-# pardir = os.path.abspath(os.path.join(os.path.dirname('__file__'), os.path.pardir))
 DATA_PATH = os.path.join(BASE_DIR, r'static/data/')
 
 
@@ -94,11 +93,11 @@ class Locate(object):
                 try:
                     s_env_tcp.send(DATA_ENV_TCP)
                     rcv_all_hex = s_env_tcp.recv(1024).encode('hex')
-                    env_info = rcv_all_hex[:6]
+                    # temperature and humidity from MCU
+                    on_board_sensor = rcv_all_hex[:6]
                     # only hex2char: data from plc
-                    # temperature and humidity not included
-                    # plc_data_hex like: 15000000080700000000000085D30200
                     plc_data_hex = rcv_all_hex[6:].decode('hex')
+                    # plc_data_hex like: 15000000080700000000000085D30200
                     assert len(plc_data_hex) == 32
                     # slice plc_data_hex
                     plc_hex_slice = re.findall(r'.{8}', plc_data_hex)
@@ -108,9 +107,9 @@ class Locate(object):
                     self.tcp_connect()
                 else:
                     # hex to dec
-                    temperature = int(env_info[2:4], 16)
-                    humidity = int(env_info[4:6], 16)
-                    # print(env_info, timer, temperature, humidity, plc_data)
+                    temperature = int(on_board_sensor[2:4], 16)
+                    humidity = int(on_board_sensor[4:], 16)
+                    # print(on_board_sensor, timer, temperature, humidity, plc_data)
                     self.active_writing(temperature, humidity, plc_data, flag=timer % 3600 < 5)
                 finally:
                     time.sleep(10)
@@ -118,22 +117,22 @@ class Locate(object):
                     if timer > pow(2, 30):
                         timer = 0
 
-        return None
+        return self.ip
 
-    def plc_data_convert(self, plc_data_slice):
+    def plc_data_convert(self, plc_hex_slice):
         plc_data = list()
-        for each in plc_data_slice:
+        for each in plc_hex_slice:
             # split and reverse high and low digits
             sub_slice = re.findall(r'.{2}', each)
             pre_hex = ''.join(sub_slice[::-1])
             raw_data = int(pre_hex, base=16)
             # if raw_data > 20000:
             #     raw_data -= pow(2, 32)
-            plc_data.append(self.int_overflow(raw_data))
+            plc_data.append(self.int32_overflow(raw_data))
         return plc_data
 
     @staticmethod
-    def int_overflow(val):
+    def int32_overflow(val):
         maxint = pow(2, 31) - 1
         if not -maxint - 1 <= val <= maxint:
             val = (val + (maxint + 1)) % (2 * (maxint + 1)) - maxint - 1
