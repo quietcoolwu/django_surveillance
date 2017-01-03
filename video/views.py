@@ -40,6 +40,10 @@ def env(request):
     return render(request, 'env.html')
 
 
+def prod_index(request):
+    return render(request, 'prod_index.html')
+
+
 def download_csv(request):
     # Create the HttpResponse object with the appropriate CSV header.
     response = HttpResponse(content_type='text/csv')

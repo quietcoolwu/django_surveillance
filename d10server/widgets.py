@@ -28,10 +28,7 @@ class NewClientsWidget(NumberWidget):
         return '{}'.format(random.randint(10, 100))
 
     def get_detail(self):
-        return '{}个枪架'.format(random.randint(10, 100))
-
-    def get_more_info(self):
-        return '{}个PLC系统'.format(random.randint(10, 100))
+        return '{} 个枪架工作中'.format(random.randint(10, 100))
 
 
 class PLCDataWidget(ListWidget):

@@ -29,8 +29,9 @@ router.register(PLCDataWidget, 'plc_data_widget')
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^video/', video_views.video),
-    url(r'^$', video_views.home, name='home'),
-    url(r'^(?P<id>\d+)/$', video_views.detail, name='detail'),
+    url(r'^home/', video_views.home, name='home'),
+    url(r'^$', video_views.prod_index, name='prod_index'),
+    url(r'^home/(?P<id>\d+)/$', video_views.detail, name='detail'),
     url(r'^env/', video_views.env),
     url(r'^download_csv/$', video_views.download_csv),
     url(r'^dashboard/', include(router.urls), name='dashboard'),
