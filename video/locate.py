@@ -2,13 +2,14 @@
 #  encoding: utf-8
 
 from __future__ import print_function, unicode_literals, division
-from d10server.settings import BASE_DIR
 
 import json
 import os
 import re
 import socket
 import time
+
+from d10server.settings import BASE_DIR
 
 IP_HEAD = '192.168.4.'
 DATA_UDP = '064D4243'.decode('hex')
@@ -22,7 +23,7 @@ class Locate(object):
     def __init__(self):
         self.ip = '0'
 
-    def active_writing(self, temperature, humidity, plc_data, flag):
+    def periodical_writing(self, temperature, humidity, plc_data, flag):
         # if humidity is not None and temperature is not None:
         today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
         data = {
@@ -43,17 +44,17 @@ class Locate(object):
     def json_write(data, today, time_scope):
         log_path = os.path.join(DATA_PATH, time_scope, (today + r'.json'))
         if os.path.exists(log_path):
-            out = open(log_path, "rb+")
+            out = open(log_path, 'rb+')
             out.seek(-1, os.SEEK_END)
             out.truncate()
             out.write(str(','))
-            json.dump(data, out, sort_keys=True)
+            json.dump(data, out, sort_keys=True, indent=4, encoding='utf-8')
             out.write(str(']'))
             out.close()
         else:
-            out = open(log_path, "w")
+            out = open(log_path, 'w')
             out.write(str('['))
-            json.dump(data, out, sort_keys=True)
+            json.dump(data, out, sort_keys=True, indent=4, encoding='utf-8')
             out.write(str(']'))
             out.close()
 
@@ -110,7 +111,7 @@ class Locate(object):
                     temperature = int(on_board_sensor[2:4], 16)
                     humidity = int(on_board_sensor[4:], 16)
                     # print(on_board_sensor, timer, temperature, humidity, plc_data)
-                    self.active_writing(temperature, humidity, plc_data, flag=timer % 3600 < 5)
+                    self.periodical_writing(temperature, humidity, plc_data, flag=timer % 3600 < 5)
                 finally:
                     time.sleep(10)
                     timer += 10

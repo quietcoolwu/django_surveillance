@@ -23,16 +23,16 @@ dashboard.addWidget('plc_data_widget', 'List', {
     let self = this;
     Dashing.utils.get('plc_data_widget', function (scope) {
       $.extend(self.scope, scope);
-      // console.log(self.scope,scope);
+      // console.log(scope.data);
     });
   },
-  interval: 4000
+  interval: 2000
 });
 
 dashboard.addWidget('convergence_widget', 'Graph', {
   getData: function () {
     $.extend(this.scope, {
-      title: 'Convergence',
+      title: '当前报警数',
       value: Math.floor(Math.random() * 50) + 40,
       more_info: 'test',
       data: [

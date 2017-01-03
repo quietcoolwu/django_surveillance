@@ -23,10 +23,10 @@
             <a class="pure-button" href="/">主页</a>
           </li>
           <li class="nav-item">
-            <a class="pure-button" href="/env" target="_blank">当前温湿度</a>
+            <a class="pure-button" href="/env" target="_blank">历史监控数据</a>
           </li>
           <li class="nav-item">
-            <a class="pure-button" href="/dashboard" target="_blank">参数实时监控</a>
+            <a class="pure-button" href="/dashboard" target="_blank">实时监控数据</a>
           </li>
           <li class="nav-item">
             <a class="pure-button" href="/video" target="_blank">视频</a>
@@ -39,6 +39,7 @@
     <div>
       {% block content %}
       {% endblock %}
+      <!--
       <p>{% now "SHORT_DATETIME_FORMAT" %} 订单情况</p>
       <label class="dropdown">
         <select>
@@ -99,6 +100,7 @@
         </tr>
         </tbody>
       </table>
+      -->
       <div class="footer">
         <div class="pure-menu pure-menu-horizontal pure-menu-open">
           <ul>
