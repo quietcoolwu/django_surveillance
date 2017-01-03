@@ -22,9 +22,9 @@ def test(request):
     return render(request, 'test.html', {'current_time': datetime.now()})
 
 
-def detail(request, _id):
+def detail(request, id):
     try:
-        post = Article.objects.get(id=str(_id))
+        post = Article.objects.get(id=str(id))
 
     except Article.DoesNotExist:
         raise Http404

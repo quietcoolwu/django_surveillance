@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="A layout example that shows off a blog page with a list of posts.">
   <title>广东顺德迪峰机械有限公司</title>
-  <link rel="stylesheet" href="../static/asset/css/pure-min.css">
-  <link rel="stylesheet" href="../static/asset/css/grids-responsive-min.css">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/pure/0.6.1/pure-min.css">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/pure/0.6.1/grids-responsive-min.css">
   <link rel="stylesheet" href="../static/asset/css/blog.css">
 </head>
 
@@ -16,7 +16,7 @@
   <div class="sidebar pure-u-1 pure-u-md-1-4">
     <div class="header">
       <h1 class="brand-title"><a href="{% url "home" %}">广东顺德迪峰机械有限公司</a></h1>
-      <h2 class="brand-tagline">生产线综合监控系统</h2>
+      <h2 class="brand-tagline">生产日志管理系统</h2>
       <nav class="nav">
         <ul class="nav-list">
           <li class="nav-item">
@@ -32,7 +32,7 @@
             <a class="pure-button" href="/download_csv" target="_blank">导出今日数据报表</a>
           </li>
           <li class="nav-item">
-            <a class="pure-button" href="/video" target="_blank">视频</a>
+            <a class="pure-button" href="/video" target="_blank">视频实时监控</a>
           </li>
         </ul>
       </nav>
@@ -42,13 +42,15 @@
     <div>
       {% block content %}
       {% endblock %}
-      <div class="footer">
-        <div class="pure-menu pure-menu-horizontal pure-menu-open">
-          <ul>
-            <li><a href="http://www.baidu.com/">About</a></li>
-          </ul>
+      <!--
+        <div class="footer">
+          <div class="pure-menu pure-menu-horizontal pure-menu-open">
+            <ul>
+              <li><a href="http://www.baidu.com/">About</a></li>
+            </ul>
+          </div>
         </div>
-      </div>
+      -->
     </div>
   </div>
 </div>
