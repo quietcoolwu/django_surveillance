@@ -22,7 +22,7 @@ EN_CN_MAPPING = {'tmp': r'温度(C)',
 
 
 class NewClientsWidget(NumberWidget):
-    title = '当前监控车床数'
+    title = '当前监控车床编号'
 
     def get_value(self):
         return '{}'.format(random.randint(10, 100))
@@ -39,15 +39,15 @@ class PLCDataWidget(ListWidget):
     more_info = 'PLC 数据实时监控'
 
     def get_data(self):
-        # test_flag
-        test_flag = True
+        # on_prod: True in production line
+        on_prod = False
         today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
         log_path = os.path.join(DATA_MIN_PATH, today + r'.json')
         res = dict((label, random.randint(10, 100))
                    for label in EN_CN_MAPPING.values())
 
-        if os.path.exists(log_path):
-            if not test_flag:
+        if on_prod:
+            if os.path.exists(log_path):
                 with open(log_path, 'r') as f:
                     plc_json = json.load(f)
                 if plc_json:

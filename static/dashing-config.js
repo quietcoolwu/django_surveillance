@@ -23,7 +23,6 @@ dashboard.addWidget('plc_data_widget', 'List', {
     let self = this;
     Dashing.utils.get('plc_data_widget', function (scope) {
       $.extend(self.scope, scope);
-      // console.log(scope.data);
     });
   },
   interval: 2013
@@ -32,7 +31,7 @@ dashboard.addWidget('plc_data_widget', 'List', {
 dashboard.addWidget('convergence_widget', 'Graph', {
   getData: function () {
     $.extend(this.scope, {
-      title: '当前报警数',
+      title: '当前累计报警数',
       value: Math.floor(Math.random() * 50) + 40,
       more_info: 'test',
       data: [
