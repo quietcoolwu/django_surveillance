@@ -30,7 +30,7 @@ class NewClientsWidget(NumberWidget):
         return '{}'.format(random.randint(10, 100))
 
     def get_detail(self):
-        return '{} 个枪架工作中'.format(random.randint(10, 100))
+        return '已工作 {0} 小时 {1} 分'.format(random.randint(10, 100), random.randint(0, 60))
 
 
 class PLCDataWidget(ListWidget):

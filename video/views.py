@@ -67,9 +67,8 @@ def download_csv(request):
         if plc_json:
             writer = csv.writer(response, encoding='gbk')
             writer.writerow(EN_CN_MAPPING.values())
-            # writer.writerow(['Second row', 'A', 'B', 'C', '"Testing"', "Here's a quote"])
             for data in plc_json:
-                print(data)
+                # print(data)
                 writing_res = list()
                 for en_name in EN_CN_MAPPING.keys():
                     writing_res.append(data.get(en_name, '数据不存在'))
