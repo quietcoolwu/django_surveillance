@@ -4,22 +4,22 @@
 
 $(function () {
   function get_time(target) {
-    var t, e = target.getYear();
+    let t, e = target.getYear();
     e < 1900 && (e += 1900);
-    var n = target.getMonth() + 1;
+    let n = target.getMonth() + 1;
     n < 10 && (n = "0" + n);
-    var i = target.getDate();
+    let i = target.getDate();
     return i < 10 && (i = "0" + i), t = e + "-" + n + "-" + i
   }
 
   function get_data(source, target) {
     $.getJSON(source, function (a) {
-      var e = [], n = [], i = [], h = [];
+      let e = [], n = [], i = [], h = [];
       $.each(a, function (a, item) {
         a % target == 0 && (e.push(item.time), n.push(item.gun_location), i.push(item.gun_speed), h.push(item.input_material_speed))
       });
-      var chart = echarts.init(document.getElementById("plc_data"));
-      var option = {
+      let chart = echarts.init(document.getElementById("plc_data"));
+      let option = {
         title: {text: "", subtext: ""},
         tooltip: {trigger: "axis"},
         legend: {data: ["枪架位置(mm)", "枪架速度(mm/s)", "送料速度(m/min)"]},
@@ -56,16 +56,16 @@ $(function () {
     })
   }
 
-  var e = new Date, n = "hour", i = "../static/data/" + n + "/" + get_time(e) + ".json";
+  let e = new Date, n = "hour", i = "../static/data/" + n + "/" + get_time(e) + ".json";
   get_data(i, 1), $("#singleDateRange").DatePicker({startDate: moment()}), $("#submitit").click(function () {
-    var a = $("#singleDateRange").val();
+    let a = $("#singleDateRange").val();
     n = "min";
-    var e = "../static/data/" + n + "/" + a + ".json";
+    let e = "../static/data/" + n + "/" + a + ".json";
     get_data(e, 1)
   }), $("#changeit").click(function () {
-    var a = $("#singleDateRange").val();
+    let a = $("#singleDateRange").val();
     n = "hour";
-    var e = "../static/data/" + n + "/" + a + ".json";
+    let e = "../static/data/" + n + "/" + a + ".json";
     get_data(e, 1)
   })
 });

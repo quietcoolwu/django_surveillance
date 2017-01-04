@@ -13,11 +13,8 @@ from django.http import Http404
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from d10server.settings import BASE_DIR
 from d10server.widgets import JSON_MIN_DIR, EN_CN_MAPPING
 from video.models import Article
-
-SHEETS_DIR = os.path.join(BASE_DIR, r'static/data/sheets/')
 
 
 # Create your views here.
@@ -57,21 +54,20 @@ def download_csv(request):
     today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="{0}.csv"'.format(today)
-    print(response, type(response))
 
     json_path = os.path.join(JSON_MIN_DIR, today + r'.json')
-
     if os.path.exists(json_path):
         with open(json_path, 'r') as f:
             plc_json = json.load(f)
         if plc_json:
+            # Must encoding as gbk for Windows Excel compatibility
             writer = csv.writer(response, encoding='gbk')
             writer.writerow(EN_CN_MAPPING.values())
             for data in plc_json:
-                # print(data)
                 writing_res = list()
                 for en_name in EN_CN_MAPPING.keys():
                     writing_res.append(data.get(en_name, '数据不存在'))
                 writer.writerow(writing_res)
 
-            return response
+    print(response)
+    return response
