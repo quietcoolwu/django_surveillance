@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 #  encoding: utf-8
 
-from __future__ import print_function, unicode_literals, division
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
 
 import json
 import os
@@ -48,13 +49,13 @@ class Locate(object):
             out.seek(-1, os.SEEK_END)
             out.truncate()
             out.write(str(','))
-            json.dump(data, out, sort_keys=True, indent=4, encoding='utf-8')
+            json.dump(data, out, sort_keys=True, indent=4, encoding='utf-8', ensure_ascii=False)
             out.write(str(']'))
             out.close()
         else:
             out = open(log_path, 'w')
             out.write(str('['))
-            json.dump(data, out, sort_keys=True, indent=4, encoding='utf-8')
+            json.dump(data, out, sort_keys=True, indent=4, encoding='utf-8', ensure_ascii=False)
             out.write(str(']'))
             out.close()
 

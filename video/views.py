@@ -1,15 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function, absolute_import, unicode_literals
 
-import csv
+import json
+import os
+import time
 from datetime import datetime
 
+import unicodecsv as csv
 from django.http import Http404
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from d10server.settings import BASE_DIR
+from d10server.widgets import JSON_MIN_DIR, EN_CN_MAPPING
 from video.models import Article
+
+SHEETS_DIR = os.path.join(BASE_DIR, r'static/data/sheets/')
 
 
 # Create your views here.
@@ -46,12 +54,25 @@ def prod_index(request):
 
 def download_csv(request):
     # Create the HttpResponse object with the appropriate CSV header.
+    today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="today.csv"'
+    response['Content-Disposition'] = 'attachment; filename="{0}.csv"'.format(today)
     print(response, type(response))
 
-    writer = csv.writer(response)
-    writer.writerow(['First row', 'Foo', 'Bar', 'Baz'])
-    writer.writerow(['Second row', 'A', 'B', 'C', '"Testing"', "Here's a quote"])
+    json_path = os.path.join(JSON_MIN_DIR, today + r'.json')
 
-    return response
+    if os.path.exists(json_path):
+        with open(json_path, 'r') as f:
+            plc_json = json.load(f)
+        if plc_json:
+            writer = csv.writer(response, encoding='gbk')
+            writer.writerow(EN_CN_MAPPING.values())
+            # writer.writerow(['Second row', 'A', 'B', 'C', '"Testing"', "Here's a quote"])
+            for data in plc_json:
+                print(data)
+                writing_res = list()
+                for en_name in EN_CN_MAPPING.keys():
+                    writing_res.append(data.get(en_name, '数据不存在'))
+                writer.writerow(writing_res)
+
+            return response
