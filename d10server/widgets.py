@@ -39,7 +39,7 @@ class PLCDataWidget(ListWidget):
 
     def get_data(self):
         # on_prod: True in production line
-        on_prod = False
+        on_prod = True
         today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
         json_path = os.path.join(JSON_MIN_DIR, today + r'.json')
         res = dict((label, random.randint(10, 100))
