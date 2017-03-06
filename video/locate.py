@@ -12,7 +12,7 @@ import time
 
 from d10server.settings import BASE_DIR
 
-IP_HEAD = '192.168.4.'
+IP_HEAD = '192.168.0.'
 DATA_UDP = '064D4243'.decode('hex')
 DATA_ENV_TCP = '07FF'.decode('hex')
 UDP_SOURCE_PORT, UDP_TARGET_PORT = 50004, 50003

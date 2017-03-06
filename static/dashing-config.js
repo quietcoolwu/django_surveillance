@@ -25,7 +25,7 @@ dashboard.addWidget('plc_data_widget', 'List', {
       $.extend(self.scope, scope);
     });
   },
-  interval: 2013
+  interval: 2000
 });
 
 dashboard.addWidget('convergence_widget', 'Graph', {
@@ -44,4 +44,3 @@ dashboard.addWidget('convergence_widget', 'Graph', {
     });
   }
 });
-
