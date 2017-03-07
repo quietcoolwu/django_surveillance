@@ -12,6 +12,7 @@ import time
 
 from d10server.settings import BASE_DIR
 
+MAX_INT = pow(2, 31) - 1
 IP_HEAD = '192.168.0.'
 DATA_UDP = '064D4243'.decode('hex')
 DATA_ENV_TCP = '07FF'.decode('hex')
@@ -27,13 +28,19 @@ class Locate(object):
     def periodical_writing(self, temperature, humidity, plc_data, flag):
         # if humidity is not None and temperature is not None:
         today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
+        # 故障信息: 风机, 枪架, 变频器
+        # malfunction_info = plc_data[-1]
         data = {
             "time": time.strftime('%H:%M', time.localtime(time.time())),
             "tmp": str(temperature),
             "hmt": str(humidity),
             "input_material_speed": str(plc_data[0] / 10),  # m/min
-            "gun_speed": str(plc_data[1]),  # mm/s
-            "gun_location": str(plc_data[3] / 100),  # mm
+            "gun_location": str(plc_data[1] / 100),  # mm
+            "gun_run_time": str(plc_data[2]),  # second
+            "input_material_run_time": str(plc_data[3]),  # second
+            "emergency_stop": str(plc_data[4]),
+            "slave_danger": str(plc_data[5]),
+            "glass_door_open": str(plc_data[-1])
         }
         print(data, DATA_PATH)
         if not flag:
@@ -49,13 +56,25 @@ class Locate(object):
             out.seek(-1, os.SEEK_END)
             out.truncate()
             out.write(str(','))
-            json.dump(data, out, sort_keys=True, indent=4, encoding='utf-8', ensure_ascii=False)
+            json.dump(
+                data,
+                out,
+                sort_keys=True,
+                indent=4,
+                encoding='utf-8',
+                ensure_ascii=False)
             out.write(str(']'))
             out.close()
         else:
             out = open(log_path, 'w')
             out.write(str('['))
-            json.dump(data, out, sort_keys=True, indent=4, encoding='utf-8', ensure_ascii=False)
+            json.dump(
+                data,
+                out,
+                sort_keys=True,
+                indent=4,
+                encoding='utf-8',
+                ensure_ascii=False)
             out.write(str(']'))
             out.close()
 
@@ -99,8 +118,8 @@ class Locate(object):
                     on_board_sensor = rcv_all_hex[:6]
                     # only hex2char: data from plc
                     plc_data_hex = rcv_all_hex[6:].decode('hex')
-                    # plc_data_hex like: 15000000080700000000000085D30200
-                    assert len(plc_data_hex) == 32
+
+                    assert len(plc_data_hex) == 56
                     # slice plc_data_hex
                     plc_hex_slice = re.findall(r'.{8}', plc_data_hex)
                     plc_data = self.plc_data_convert(plc_hex_slice)
@@ -112,7 +131,8 @@ class Locate(object):
                     temperature = int(on_board_sensor[2:4], 16)
                     humidity = int(on_board_sensor[4:], 16)
                     # print(on_board_sensor, timer, temperature, humidity, plc_data)
-                    self.periodical_writing(temperature, humidity, plc_data, flag=timer % 3600 < 5)
+                    self.periodical_writing(
+                        temperature, humidity, plc_data, flag=timer % 3600 < 5)
                 finally:
                     time.sleep(10)
                     timer += 10
@@ -128,6 +148,7 @@ class Locate(object):
             sub_slice = re.findall(r'.{2}', each)
             pre_hex = ''.join(sub_slice[::-1])
             raw_data = int(pre_hex, base=16)
+            print('raw:', raw_data)
             # if raw_data > 20000:
             #     raw_data -= pow(2, 32)
             plc_data.append(self.int32_overflow(raw_data))
@@ -135,9 +156,9 @@ class Locate(object):
 
     @staticmethod
     def int32_overflow(val):
-        maxint = pow(2, 31) - 1
-        if not -maxint - 1 <= val <= maxint:
-            val = (val + (maxint + 1)) % (2 * (maxint + 1)) - maxint - 1
+        # maxint = pow(2, 31) - 1
+        if not (-MAX_INT - 1 <= val <= MAX_INT):
+            val = (val + (MAX_INT + 1)) % (2 * (MAX_INT + 1)) - MAX_INT - 1
         return val
 
 

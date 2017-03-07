@@ -15,12 +15,18 @@ from dashing.widgets import ListWidget, NumberWidget
 from .settings import BASE_DIR
 
 JSON_MIN_DIR = os.path.join(BASE_DIR, r'static/data/min/')
-EN_CN_MAPPING = OrderedDict({'time': r'时刻',
-                             'tmp': r'温度(C)',
-                             'hmt': r'湿度(%)',
-                             'gun_speed': r'枪架速度(mm/s)',
-                             'gun_location': r'枪架位置(mm)',
-                             'input_material_speed': r'送料速度(m/min)'})
+EN_CN_MAPPING = OrderedDict({
+    'time': r'时刻',
+    'tmp': r'温度(C)',
+    'hmt': r'湿度(%)',
+    'gun_location': r'枪架位置(mm)',
+    'gun_run_time': r'枪架运行时间(s)',
+    'input_material_run_time': r'送料持续时间(s)',
+    'input_material_speed': r'送料速度(m/min)',
+    'emergency_stop': r'急停故障',
+    'slave_danger': r'饲服故障',
+    'glass_door_open': r'玻璃保护门打开'
+})
 
 
 class NewClientsWidget(NumberWidget):
@@ -30,7 +36,8 @@ class NewClientsWidget(NumberWidget):
         return '{}'.format(random.randint(10, 100))
 
     def get_detail(self):
-        return '已工作 {0} 小时 {1} 分'.format(random.randint(10, 100), random.randint(0, 60))
+        return '已工作 {0} 小时 {1} 分'.format(
+            random.randint(10, 100), random.randint(0, 60))
 
 
 class PLCDataWidget(ListWidget):

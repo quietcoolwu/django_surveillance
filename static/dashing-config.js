@@ -15,7 +15,7 @@ dashboard.addWidget('new_users_widget', 'Number', {
       $.extend(self.scope, scope);
     });
   },
-  interval: 3017
+  interval: 3000
 });
 
 dashboard.addWidget('plc_data_widget', 'List', {
