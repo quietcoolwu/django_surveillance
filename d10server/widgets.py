@@ -15,7 +15,7 @@ from dashing.widgets import ListWidget, NumberWidget
 from .settings import BASE_DIR
 
 JSON_MIN_DIR = os.path.join(BASE_DIR, r'static/data/min/')
-EN_CN_MAPPING = OrderedDict({
+EN_CN_MAPPING = {
     'time': r'时刻',
     'tmp': r'温度(C)',
     'hmt': r'湿度(%)',
@@ -23,10 +23,10 @@ EN_CN_MAPPING = OrderedDict({
     'gun_run_time': r'枪架运行时间(s)',
     'input_material_run_time': r'送料持续时间(s)',
     'input_material_speed': r'送料速度(m/min)',
-    'emergency_stop': r'急停故障',
-    'slave_danger': r'饲服故障',
-    'glass_door_open': r'玻璃保护门打开'
-})
+    'A_emergency_stop': r'急停故障',
+    'A_slave_danger': r'饲服故障',
+    'A_glass_door_open': r'玻璃保护门打开'
+}
 
 
 class NewClientsWidget(NumberWidget):

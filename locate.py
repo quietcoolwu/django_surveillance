@@ -30,6 +30,9 @@ class Locate(object):
         today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
         # 故障信息: 风机, 枪架, 变频器
         # malfunction_info = plc_data[-1]
+        A_emergency_stop = '否' if not plc_data[4] else '是'
+        A_slave_danger = '否' if not plc_data[5] else '是'
+        A_glass = '否' if not plc_data[-1] else '是'
         data = {
             "time": time.strftime('%H:%M', time.localtime(time.time())),
             "tmp": str(temperature),
@@ -38,9 +41,9 @@ class Locate(object):
             "gun_location": str(plc_data[1] / 100),  # mm
             "gun_run_time": str(plc_data[2]),  # second
             "input_material_run_time": str(plc_data[3]),  # second
-            "emergency_stop": str(plc_data[4]),
-            "slave_danger": str(plc_data[5]),
-            "glass_door_open": str(plc_data[-1])
+            "A_emergency_stop": A_emergency_stop,
+            "A_slave_danger": A_slave_danger,
+            "A_glass_door_open": A_glass
         }
         print(data, DATA_PATH)
         if not flag:
@@ -61,8 +64,8 @@ class Locate(object):
                 out,
                 sort_keys=True,
                 indent=4,
-                encoding='utf-8',
-                ensure_ascii=False)
+                encoding='utf-8')
+            # ensure_ascii=False)
             out.write(str(']'))
             out.close()
         else:
@@ -102,7 +105,7 @@ class Locate(object):
     def tcp_connect(self):
         self.udp_scan()
         s_env_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s_env_tcp.settimeout(8)
+        s_env_tcp.settimeout(5)
         timer = 0
         try:
             s_env_tcp.connect((self.ip, TCP_TARGET_PORT))
