@@ -15,13 +15,17 @@ Including another URLconf
 """
 
 from __future__ import absolute_import
+
 from dashing.utils import router
-from django.conf.urls import url, include
+from django.conf.urls import include, url
 from django.contrib import admin
+
 from video import views as video_views
-# from django.views.generic.base import RedirectView
 
 from .widgets import NewClientsWidget, PLCDataWidget
+
+# from django.views.generic.base import RedirectView
+
 
 router.register(NewClientsWidget, 'new_users_widget')
 router.register(PLCDataWidget, 'plc_data_widget')
@@ -29,6 +33,7 @@ router.register(PLCDataWidget, 'plc_data_widget')
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^video/', video_views.video),
+    url(r'^p2p_video/', video_views.p2p_video),
     url(r'^home/', video_views.home, name='home'),
     url(r'^$', video_views.prod_index, name='prod_index'),
     url(r'^(?P<id>\d+)/$', video_views.detail, name='detail'),
